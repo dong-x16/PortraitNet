@@ -1,5 +1,4 @@
 # PortraitNet
----
 
 Code for the paper ["PortraitNet: Real-time portrait segmentation network for mobile device".](https://www.sciencedirect.com/science/article/pii/S0097849319300305) @ CAD&Graphics 2019
 
@@ -8,7 +7,7 @@ Code for the paper ["PortraitNet: Real-time portrait segmentation network for mo
 
 We propose a real-time portrait segmentation model, called PortraitNet, that can run effectively and efficiently on mobile device. PortraitNet is based on a lightweight U-shape architecture with two auxiliary losses at the training stage, while no additional cost is required at the testing stage for portrait inference. 
 
-![](/figures/Introduction.pdf )
+![](figures/Introduction.pdf )
 
 ---
 ## Experimental setup
@@ -30,23 +29,23 @@ Note:  Supervise-Portrait is a portrait segmentation dataset collected from the 
 ---
 ## Training
 ### Network Architecture
-![](/figures/PortraitNet.pdf )
+![](figures/PortraitNet.pdf )
 
 ### Training Steps
 - Download the datasets (EG1800 or Supervise-Portriat). If you want to training at your own dataset, you need to modify data/datasets.py and data/datasets_portraitseg.py.
 - Prepare training/testing files, like data/select_data/eg1800_train.txt and data/select_data/eg1800_test.txt.
 - Select and modify the parameters in the folder of config.
 - Start the training with single gpu:
-'''
+```
 cd myTrain
 python2.7 train.py
-'''
+```
 
 ---
 ## Testing
 In the folder of myTest:
-- you can use 'EvalModel.ipynb' to test on testing datasets.
-- you can use 'VideoTest.ipynb' to test on a single image or video.
+- you can use `EvalModel.ipynb` to test on testing datasets.
+- you can use `VideoTest.ipynb` to test on a single image or video.
 
 ---
 ## Download models
