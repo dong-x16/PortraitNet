@@ -1,12 +1,12 @@
 data_root: /home/dongx12/Data/
 file_root: /home/dongx12/PortraitNet/data/select_data/
-# model_root: /home/dongx12/PortraitNet/myexp/mobilenetv2_eg1800/both_224_without_group/
-model_root: /home/dongx12/PortraitNet/myexp/mobilenetv2_supervise_portrait/both_224_without_group/
+model_root: /home/dongx12/PortraitNet/myexp/mobilenetv2_eg1800/both_224_without_group/
+# model_root: /home/dongx12/PortraitNet/myexp/mobilenetv2_supervise_portrait/both_224_without_group/
 
 istrain: True
 task: 'seg'
-# datasetlist: ['EG1800'] # 'support: [EG1800, supervisely_face_easy, ATR, MscocoBackground]'
-datasetlist: ['supervisely_face_easy'] # 'support: [EG1800, supervisely_face_easy, ATR, MscocoBackground]'
+datasetlist: ['EG1800'] # 'support: [EG1800, supervisely_face_easy, ATR, MscocoBackground]'
+# datasetlist: ['supervisely_face_easy'] # 'support: [EG1800, supervisely_face_easy, ATR, MscocoBackground]'
 
 input_height: 224 # the height of input images
 input_width: 224 # the width of input images
