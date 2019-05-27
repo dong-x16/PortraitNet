@@ -27,7 +27,6 @@ from data_aug import Normalize_Img, Anti_Normalize_Img
 from focal_loss import FocalLoss
 
 from logger import Logger
-# tensorboard --logdir='./log'
 # os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 def calcIOU(img, mask):
