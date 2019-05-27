@@ -1,0 +1,32 @@
+data_root: /home/dongx12/Data/
+file_root: /home/dongx12/PortraitNet/data/select_data/
+model_root: /home/dongx12/PortraitNet/myexp/mobilenetv2_video_total/single_224_without_group/
+
+istrain: True
+task: 'seg'
+datasetlist: ['supervisely_face_easy'] # 'support: [EG1800, supervisely_face_easy, ATR, MscocoBackground]'
+
+input_height: 224 # the height of input images
+input_width: 224 # the width of input images
+
+video: True # if exp_args.video=True, add prior channel for input images
+prior_prob: 0.5 # the probability to set empty prior channel
+
+addEdge: False # whether to add boundary auxiliary loss 
+edgeRatio: 0.1 # the weight of boundary auxiliary loss
+stability: False # whether to add consistency constraint loss
+use_kl: True # whether to use KL loss in consistency constraint loss
+temperature: 1 # temperature in consistency constraint loss
+alpha: 2 # the weight of consistency constraint loss
+
+# input normalization parameters
+padding_color: 128
+img_scale: 1
+img_mean: [103.94, 116.78, 123.68] # BGR order, image mean
+img_val: [0.017, 0.017, 0.017] # BGR order, image val
+
+init: False # whether to use pretian model to init portraitnet
+resume: False # whether to continue training
+
+useUpsample: False # if exp_args.useUpsample==True, use nn.Upsample in decoder, else use nn.ConvTranspose2d
+useDeconvGroup: False # if exp_args.useDeconvGroup==True, set groups=input_channel in nn.ConvTranspose2d

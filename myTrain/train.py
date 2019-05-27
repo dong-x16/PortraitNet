@@ -14,6 +14,7 @@ import time
 import os
 import shutil
 from easydict import EasyDict as edict
+from yaml import load
 
 import sys
 sys.path.append('../data/')
@@ -591,50 +592,76 @@ def save_checkpoint(state, is_best, root, filename='checkpoint.pth.tar'):
         
 
 def main(args):
-    assert args.model in ['PortraitNet', 'ENet', 'BiSeNet'], 'Error!, <model> should in [PortraitNet, ENet, BiSeNet]'
-        
     cudnn.benchmark = True
-    save_root = '../myexp/mobilenetv2_eg1800/single_224_without_group/'
-    write_root = '../myexp/mobilenetv2_eg1800/single_224_without_group/'
-    logs_path = '../myexp/mobilenetv2_eg1800/single_224_without_group/log/'
+    assert args.model in ['PortraitNet', 'ENet', 'BiSeNet'], 'Error!, <model> should in [PortraitNet, ENet, BiSeNet]'
     
+    config_path = args.config_path
+    print ('===========> loading config <============')
+    print ("config path: ", config_path)
+    with open(config_path,'rb') as f:
+        cont = f.read()
+    cf = load(cont)
+    
+    print ('===========> loading data <===========')
+    exp_args = edict()
+    
+    exp_args.istrain = cf['istrain'] # set the mode 
+    exp_args.task = cf['task'] # only support 'seg' now
+    exp_args.datasetlist = cf['datasetlist']
+    exp_args.model_root = cf['model_root'] 
+    exp_args.data_root = cf['data_root']
+    exp_args.file_root = cf['file_root']
+
+    # set log path
+    logs_path = os.path.join(exp_args.model_root, 'log/')
     if os.path.exists(logs_path):
         shutil.rmtree(logs_path)
     logger_train = Logger(logs_path + 'train')
     logger_test = Logger(logs_path + 'test')
     
-    print ('===========> loading data <===========')
-    exp_args = edict()
-    exp_args.task = 'seg' # only support 'seg' now
-    exp_args.datasetlist = ['EG1800'] #'support: [EG1800, supervisely_face_easy, ATR, MscocoBackground]'
+    # the height of input images, default=224
+    exp_args.input_height = cf['input_height']
+    # the width of input images, default=224
+    exp_args.input_width = cf['input_width']
     
-    exp_args.input_height = 224 # the height of input images
-    exp_args.input_width = 224 # the width of input images
+    # if exp_args.video=True, add prior channel for input images, default=False
+    exp_args.video = cf['video']
+    # the probability to set empty prior channel, default=0.5
+    exp_args.prior_prob = cf['prior_prob']
     
-    exp_args.video = False # if exp_args.video=True, add prior channel for input images
-    exp_args.prior_prob = 0.5 # the probability to set empty prior channel
-    
-    exp_args.istrain = True # set the mode 
-    exp_args.addEdge = False # whether to add boundary auxiliary loss 
-    exp_args.edgeRatio = 0.1 # the weight of boundary auxiliary loss
-    exp_args.stability = False # whether to add consistency constraint loss
-    exp_args.use_kl = True # whether to use KL loss in consistency constraint loss
-    exp_args.temperature = 1 # temperature in consistency constraint loss
-    exp_args.alpha = 2 # the weight of consistency constraint loss
+    # whether to add boundary auxiliary loss, default=False
+    exp_args.addEdge = cf['addEdge']
+    # the weight of boundary auxiliary loss, default=0.1
+    exp_args.edgeRatio = cf['edgeRatio']
+    # whether to add consistency constraint loss, default=False
+    exp_args.stability = cf['stability']
+    # whether to use KL loss in consistency constraint loss, default=True
+    exp_args.use_kl = cf['use_kl']
+    # temperature in consistency constraint loss, default=1
+    exp_args.temperature = cf['temperature'] 
+    # the weight of consistency constraint loss, default=2
+    exp_args.alpha = cf['alpha'] 
     
     # input normalization parameters
-    exp_args.padding_color = 128
-    exp_args.img_scale = 1
-    exp_args.img_mean = [103.94, 116.78, 123.68] # BGR order, image mean
-    exp_args.img_val = [1/0.017, 1/0.017, 1/0.017] # BGR order, image val
+    exp_args.padding_color = cf['padding_color']
+    exp_args.img_scale = cf['img_scale']
+    # BGR order, image mean, default=[103.94, 116.78, 123.68]
+    exp_args.img_mean = cf['img_mean']
+    # BGR order, image val, default=[1/0.017, 1/0.017, 1/0.017]
+    exp_args.img_val = cf['img_val'] 
     
-    exp_args.init = False # whether to use pretian model to init portraitnet
-    exp_args.resume = False # whether to continue training
+    # whether to use pretian model to init portraitnet
+    exp_args.init = cf['init'] 
+    # whether to continue training
+    exp_args.resume = cf['resume'] 
     
-    exp_args.useUpsample = False # if exp_args.useUpsample==True, use nn.Upsample in decoder, else use nn.ConvTranspose2d
-    exp_args.useDeconvGroup = False # if exp_args.useDeconvGroup==True, set groups=input_channel in nn.ConvTranspose2d
+    # if exp_args.useUpsample==True, use nn.Upsample in decoder, else use nn.ConvTranspose2d
+    exp_args.useUpsample = cf['useUpsample'] 
+    # if exp_args.useDeconvGroup==True, set groups=input_channel in nn.ConvTranspose2d
+    exp_args.useDeconvGroup = cf['useDeconvGroup'] 
     
     # set training dataset
+    exp_args.istrain = True
     dataset_train = Human(exp_args)
     print ("image number in training: ", len(dataset_train))
     dataLoader_train = torch.utils.data.DataLoader(dataset_train, batch_size=args.batchsize, 
@@ -642,7 +669,6 @@ def main(args):
     
     # set testing dataset
     exp_args.istrain = False
-    # exp_args.datasetlist = ['eg1800']
     dataset_test = Human(exp_args)
     print ("image number in testing: ", len(dataset_test))
     dataLoader_test = torch.utils.data.DataLoader(dataset_test, batch_size=1, 
@@ -708,7 +734,7 @@ def main(args):
         print ("load model init finish...")
     
     if exp_args.resume:
-        bestModelFile = save_root + 'model_best.pth.tar'
+        bestModelFile = os.path.join(exp_args.model_root, 'model_best.pth.tar')
         if os.path.isfile(bestModelFile):
             checkpoint = torch.load(bestModelFile)
             netmodel.load_state_dict(checkpoint['state_dict'])
@@ -739,12 +765,16 @@ def main(args):
             'minLoss': minLoss,
             'state_dict': netmodel.state_dict(),
             'optimizer' : optimizer.state_dict(),
-            }, is_best, write_root)
+            }, is_best, exp_args.model_root)
         
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Training code')
     parser.add_argument('--model', default='PortraitNet', type=str, 
                         help='<model> should in [PortraitNet, ENet, BiSeNet]')
+    parser.add_argument('--config_path', 
+                        default='/home/dongx12/PortraitNet/config/model_mobilenetv2_without_auxiliary_losses.yaml', 
+                        type=str, help='the config path of the model')
+    
     parser.add_argument('--workers', default=4, type=int, help='number of data loading workers')
     parser.add_argument('--batchsize', default=64, type=int, help='mini-batch size')
     parser.add_argument('--lr', default=0.001, type=float, help='initial learning rate')

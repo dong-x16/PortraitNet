@@ -11,60 +11,59 @@ class Human(data.Dataset):
         self.exp_args = exp_args
         self.task = exp_args.task
         self.datasetlist = exp_args.datasetlist
+        self.data_root = exp_args.data_root # data_root = '/home/dongx12/Data/'
+        self.file_root = exp_args.file_root # file_root = '/home/dongx12/PortraitNet/data/select_data/'
         
         self.datasets = {}
         self.imagelist = []
-        # 
-        data_root = '/home/dongx12/Data/'
-        root = '/home/dongx12/PortraitNet/data/'
         
         # load dataset
         if 'supervisely' in self.datasetlist:
-            ImageRoot = data_root
-            AnnoRoot = data_root
-            ImgIds_Train = root + 'select_data/supervisely_train_new.txt'
-            ImgIds_Test = root + 'select_data/supervisely_test_new.txt'
+            ImageRoot = self.data_root
+            AnnoRoot = self.data_root
+            ImgIds_Train = self.file_root + 'supervisely_train_new.txt'
+            ImgIds_Test = self.file_root + 'supervisely_test_new.txt'
             exp_args.dataset = 'supervisely'
             self.datasets['supervisely'] = PortraitSeg(ImageRoot, AnnoRoot, ImgIds_Train, ImgIds_Test, self.exp_args)
         
         if 'EG1800' in self.datasetlist:
-            ImageRoot = data_root + 'EG1800/Images/'
-            AnnoRoot = data_root + 'EG1800/Labels/'
-            ImgIds_Train = root + 'select_data/eg1800_train.txt'
-            ImgIds_Test = root + 'select_data/eg1800_test.txt'
+            ImageRoot = self.data_root + 'EG1800/Images/'
+            AnnoRoot = self.data_root + 'EG1800/Labels/'
+            ImgIds_Train = self.file_root + 'eg1800_train.txt'
+            ImgIds_Test = self.file_root + 'eg1800_test.txt'
             exp_args.dataset = 'eg1800'
             self.datasets['eg1800'] = PortraitSeg(ImageRoot, AnnoRoot, ImgIds_Train, ImgIds_Test, self.exp_args)
         
         if 'ATR' in self.datasetlist:
-            ImageRoot = data_root + 'ATR/train/images/'
-            AnnoRoot = data_root + 'ATR/train/seg/'
-            ImgIds_Train = root + 'select_data/ATR_train.txt'
-            ImgIds_Test = root + 'select_data/ATR_test.txt'
+            ImageRoot = self.data_root + 'ATR/train/images/'
+            AnnoRoot = self.data_root + 'ATR/train/seg/'
+            ImgIds_Train = self.file_root + 'ATR_train.txt'
+            ImgIds_Test = self.file_root + 'ATR_test.txt'
             exp_args.dataset = 'ATR'
             self.datasets['ATR'] = PortraitSeg(ImageRoot, AnnoRoot, ImgIds_Train, ImgIds_Test, self.exp_args)
         
         if 'supervisely_face_easy' in self.datasetlist:
-            ImageRoot = data_root
-            AnnoRoot = data_root
-            ImgIds_Train = root + 'select_data/supervisely_face_train_easy.txt'
-            ImgIds_Test = root + 'select_data/supervisely_face_test_easy.txt'
+            ImageRoot = self.data_root
+            AnnoRoot = self.data_root
+            ImgIds_Train = self.file_root + 'supervisely_face_train_easy.txt'
+            ImgIds_Test = self.file_root + 'supervisely_face_test_easy.txt'
             exp_args.dataset = 'supervisely_face_easy'
             self.datasets['supervisely_face_easy'] = PortraitSeg(ImageRoot, AnnoRoot, ImgIds_Train, ImgIds_Test, self.exp_args)
             
         if 'supervisely_face_difficult' in self.datasetlist:
-            ImageRoot = data_root
-            AnnoRoot = data_root
-            ImgIds_Train = root + 'select_data/supervisely_face_train_difficult.txt'
-            ImgIds_Test = root + 'select_data/supervisely_face_test_difficult.txt'
+            ImageRoot = self.data_root
+            AnnoRoot = self.data_root
+            ImgIds_Train = self.file_root + 'supervisely_face_train_difficult.txt'
+            ImgIds_Test = self.file_root + 'supervisely_face_test_difficult.txt'
             exp_args.dataset = 'supervisely_face_difficult'
             self.datasets['supervisely_face_difficult'] = PortraitSeg(ImageRoot, AnnoRoot, ImgIds_Train, ImgIds_Test, self.exp_args)
         
         if 'MscocoBackground' in self.datasetlist:
             dataType = 'train2017'
-            ImageRoot = data_root
-            AnnoRoot = data_root + 'mscoco2017/annotations/person_keypoints_{}.json'.format(dataType)
-            ImgIds_Train = root + 'select_data/select_mscoco_background_train2017.txt'
-            ImgIds_Test = root + 'select_data/select_mscoco_background_val2017.txt'
+            ImageRoot = self.data_root
+            AnnoRoot = self.data_root + 'mscoco2017/annotations/person_keypoints_{}.json'.format(dataType)
+            ImgIds_Train = self.file_root + 'select_mscoco_background_train2017.txt'
+            ImgIds_Test = self.file_root + 'select_mscoco_background_val2017.txt'
             exp_args.dataset = 'MscocoBackground'
             self.datasets['background'] = PortraitSeg(ImageRoot, AnnoRoot, ImgIds_Train, ImgIds_Test, self.exp_args)
 

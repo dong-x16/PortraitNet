@@ -224,11 +224,11 @@ def Normalize_Img(imgOri, scale, mean, val):
     if len(img.shape) == 4:
         for j in range(img.shape[0]):
             for i in range(len(mean)):
-                img[j,:,:,i] = (img[j,:,:,i]-mean[i])/val[i]
+                img[j,:,:,i] = (img[j,:,:,i]-mean[i])*val[i]
         return img
     else:
         for i in range(len(mean)):
-            img[:,:,i] = (img[:,:,i]-mean[i])/val[i]
+            img[:,:,i] = (img[:,:,i]-mean[i])*val[i]
         return img
 
 def Anti_Normalize_Img(imgOri, scale, mean, val):
@@ -236,11 +236,11 @@ def Anti_Normalize_Img(imgOri, scale, mean, val):
     if len(img.shape) == 4:
         for j in range(img.shape[0]):
             for i in range(len(mean)):
-                img[j,:,:,i] = img[j,:,:,i]*val[i]+mean[i]
+                img[j,:,:,i] = img[j,:,:,i]/val[i]+mean[i]
         return np.array(img*scale, np.uint8)
     else:
         for i in range(len(mean)):
-            img[:,:,i] = img[:,:,i]*val[i]+mean[i]
+            img[:,:,i] = img[:,:,i]/val[i]+mean[i]
         return np.array(img*scale, np.uint8)
     
 # ===================== generate prior channel for input image =====================

@@ -1,2 +1,7 @@
 myexp/
+.gitignore
+myTest/result.mp4
+config/test_config.ipynb
+
+
 
