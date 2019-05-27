@@ -7,7 +7,10 @@ Code for the paper ["PortraitNet: Real-time portrait segmentation network for mo
 
 We propose a real-time portrait segmentation model, called PortraitNet, that can run effectively and efficiently on mobile device. PortraitNet is based on a lightweight U-shape architecture with two auxiliary losses at the training stage, while no additional cost is required at the testing stage for portrait inference. 
 
-![](./figures/Introduction.pdf )
+<div align="center">
+<img src="figures/Introduction.pdf" width="1000px"/>
+<p> Portrait segmentation applications on mobile device.</p>
+</div>
 
 ---
 ## Experimental setup
@@ -20,16 +23,18 @@ We propose a real-time portrait segmentation model, called PortraitNet, that can
 
 
 ### Download datasets
-- [EG1800](https://pan.baidu.com/s/1myEBdEmGz6ufniU3i1e6Uw)
-Note: Since several image URL links are invalid in the [original EG1800 dataset](http://xiaoyongshen.me/webpage_portrait/index.html), we finally use 1447 images for training and 289 images for validation. 
+- [EG1800](https://pan.baidu.com/s/1myEBdEmGz6ufniU3i1e6Uw) Since several image URL links are invalid in the [original EG1800 dataset](http://xiaoyongshen.me/webpage_portrait/index.html), we finally use 1447 images for training and 289 images for validation. 
 
-- [Supervise-Portrait](https://pan.baidu.com/s/1uBtCsLj156e_iy3DtkvjQQ)
-Note:  Supervise-Portrait is a portrait segmentation dataset collected from the public human segmentation dataset [Supervise.ly](https://supervise.ly/) using the same data process as EG1800.
+- [Supervise-Portrait](https://pan.baidu.com/s/1uBtCsLj156e_iy3DtkvjQQ) Supervise-Portrait is a portrait segmentation dataset collected from the public human segmentation dataset [Supervise.ly](https://supervise.ly/) using the same data process as EG1800.
 
 ---
 ## Training
 ### Network Architecture
-![](./figures/PortraitNet.pdf )
+
+<div align="center">
+<img src="figures/PortraitNet.pdf" width="1000px"/>
+<p> Overview of PortraitNet.</p>
+</div>
 
 ### Training Steps
 - Download the datasets (EG1800 or Supervise-Portriat). If you want to training at your own dataset, you need to modify data/datasets.py and data/datasets_portraitseg.py.
