@@ -7,7 +7,7 @@ Code for the paper ["PortraitNet: Real-time portrait segmentation network for mo
 
 We propose a real-time portrait segmentation model, called PortraitNet, that can run effectively and efficiently on mobile device. PortraitNet is based on a lightweight U-shape architecture with two auxiliary losses at the training stage, while no additional cost is required at the testing stage for portrait inference. 
 
-![](figures/Introduction.pdf )
+![](./figures/Introduction.pdf )
 
 ---
 ## Experimental setup
@@ -29,7 +29,7 @@ Note:  Supervise-Portrait is a portrait segmentation dataset collected from the 
 ---
 ## Training
 ### Network Architecture
-![](figures/PortraitNet.pdf )
+![](./figures/PortraitNet.pdf )
 
 ### Training Steps
 - Download the datasets (EG1800 or Supervise-Portriat). If you want to training at your own dataset, you need to modify data/datasets.py and data/datasets_portraitseg.py.
