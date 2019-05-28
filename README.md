@@ -8,7 +8,7 @@ Code for the paper ["PortraitNet: Real-time portrait segmentation network for mo
 We propose a real-time portrait segmentation model, called PortraitNet, that can run effectively and efficiently on mobile device. PortraitNet is based on a lightweight U-shape architecture with two auxiliary losses at the training stage, while no additional cost is required at the testing stage for portrait inference. 
 
 <div align="center">
-<img src="figures/Introduction.pdf" width="800px"/>
+<img src="figures/Introduction.jpg" width="800px"/>
 <p> Portrait segmentation applications on mobile device.</p>
 </div>
 
@@ -32,7 +32,7 @@ We propose a real-time portrait segmentation model, called PortraitNet, that can
 ### Network Architecture
 
 <div align="center">
-<img src="figures/PortraitNet.pdf" width="800px"/>
+<img src="figures/PortraitNet.jpg" width="800px"/>
 <p> Overview of PortraitNet.</p>
 </div>
 
