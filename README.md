@@ -62,6 +62,13 @@ tensorboard --logdir='./log'
 
 ---
 ## Download models
+from Dropbox:
+- [mobilenetv2_eg1800_with_two_auxiliary_losses](https://www.dropbox.com/s/nyanai43cnynqlx/mobilenetv2_eg1800_with_two_auxiliary_losses.tar?dl=0)(Training on EG1800 with two auxiliary losses)
+- [mobilenetv2_supervise_portrait_with_two_auxiliary_losses](https://www.dropbox.com/s/pyocc3en6t63itp/mobilenetv2_supervise_portrait_with_two_auxiliary_losses.tar?dl=0)(Training on Supervise-Portrait with two auxiliary losses)
+- [mobilenetv2_total_with_prior_channel](https://www.dropbox.com/s/37zz9kkyki1wv8e/mobilenetv2_total_with_prior_channel.tar?dl=0)(Training on Human with prior channel)
+
+
+from Baidu Cloud:
 - [mobilenetv2_eg1800_with_two_auxiliary_losses](https://pan.baidu.com/s/1oEMwxQUvpONA913I95Od-w)(Training on EG1800 with two auxiliary losses)
 - [mobilenetv2_supervise_portrait_with_two_auxiliary_losses](https://pan.baidu.com/s/1nCJp7RS2rv7SxNz8_Lfmcg)(Training on Supervise-Portrait with two auxiliary losses)
 - [mobilenetv2_total_with_prior_channel](https://pan.baidu.com/s/1sEG87ezvIZ4-iTa4W_hfYA)(Training on Human with prior channel)
